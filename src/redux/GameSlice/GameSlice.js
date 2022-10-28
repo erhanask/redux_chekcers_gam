@@ -1,0 +1,23 @@
+import {createSlice} from "@reduxjs/toolkit";
+
+
+export const GameSlice = createSlice({
+    name: 'game',
+    initialState: {
+        pattern: [
+            [{cords:[0,0],status:'empty'},{cords:[0,1],status:'empty'},{cords:[0,2],status:'empty'},{cords:[0,3],status:'empty'},{cords:[0,4],status:'empty'},{cords:[0,5],status:'empty'},{cords:[0,6],status:'empty'},{cords:[0,7],status:'empty'}],
+            [{cords:[1,0],status:'empty'},{cords:[1,1],status:'empty'},{cords:[1,2],status:'empty'},{cords:[1,3],status:'empty'},{cords:[1,4],status:'empty'},{cords:[1,5],status:'empty'},{cords:[1,6],status:'empty'},{cords:[1,7],status:'empty'}],
+            [{cords:[2,0],status:'empty'},{cords:[2,1],status:'empty'},{cords:[2,2],status:'empty'},{cords:[2,3],status:'empty'},{cords:[2,4],status:'empty'},{cords:[2,5],status:'empty'},{cords:[2,6],status:'empty'},{cords:[2,7],status:'empty'}],
+            [{cords:[3,0],status:'empty'},{cords:[3,1],status:'empty'},{cords:[3,2],status:'empty'},{cords:[3,3],status:'empty'},{cords:[3,4],status:'empty'},{cords:[3,5],status:'empty'},{cords:[3,6],status:'empty'},{cords:[3,7],status:'empty'}],
+            [{cords:[4,0],status:'empty'},{cords:[4,1],status:'empty'},{cords:[4,2],status:'empty'},{cords:[4,3],status:'empty'},{cords:[4,4],status:'empty'},{cords:[4,5],status:'empty'},{cords:[4,6],status:'empty'},{cords:[4,7],status:'empty'}],
+            [{cords:[5,0],status:'empty'},{cords:[5,1],status:'empty'},{cords:[5,2],status:'empty'},{cords:[5,3],status:'empty'},{cords:[5,4],status:'empty'},{cords:[5,5],status:'empty'},{cords:[5,6],status:'empty'},{cords:[5,7],status:'empty'}],
+            [{cords:[6,0],status:'empty'},{cords:[6,1],status:'empty'},{cords:[6,2],status:'empty'},{cords:[6,3],status:'empty'},{cords:[6,4],status:'empty'},{cords:[6,5],status:'empty'},{cords:[6,6],status:'empty'},{cords:[6,7],status:'empty'}],
+            [{cords:[7,0],status:'empty'},{cords:[7,1],status:'empty'},{cords:[7,2],status:'empty'},{cords:[7,3],status:'empty'},{cords:[7,4],status:'empty'},{cords:[7,5],status:'empty'},{cords:[7,6],status:'empty'},{cords:[7,7],status:'empty'}]
+        ],
+
+    },
+    reducers: {},
+})
+
+
+export default GameSlice.reducer;
