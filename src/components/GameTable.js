@@ -3,30 +3,40 @@ import {useSelector} from "react-redux";
 
 export const GameTable = () => {
     const pattern = useSelector(state => state.game.pattern);
+    const pieces = useSelector(state => state.game.pieces);
     console.log(pattern);
     let keyIndex = 0;
 
 
     return (
-        <div className={`gameTable`}>
-            <div className={`boardWraper`}>
-                {
-                    pattern.map((row) => {
-                        keyIndex++;
-                        return (
-                            <div key={keyIndex} className={`boardRow row`}>
-                                {row.map((square) => {
-                                    keyIndex++
-                                    return (
-                                        <div key={keyIndex} className={`boardSquare col ${(square.cords[0]+square.cords[1]) % 2 === 0 ? `bg-light`:`bg-dark`}`}>
-                                            {square.cords}
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        )
-                    })
-                }
+        <div className={`gameTable container d-flex pt-4`}>
+            <div className={`boardWrapper w-75`}>
+                {pattern.map((row) => {
+                    keyIndex++;
+                    return (
+                        <div key={keyIndex} className={`boardRow row m-0`}>
+                            {row.map((square) => {
+                                keyIndex++
+                                return (
+                                    <div key={keyIndex}
+                                         className={`boardSquare col ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`}`}>
+                                        {pieces.white.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords)) ? <img className={`w-50`} alt={`white`} src={`/images/white.png`}/>:square.coords}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )
+                })}
+            </div>
+            <div className={`infoWrapper w-25`}>
+                <div>
+                    <p>White Plays</p>
+                    <img className={`w-50`} alt={`white`} src={`/images/white.png`}/>
+                </div>
+                <div>
+                    <p>Black Plays</p>
+                    <img className={`w-50`} alt={`black`} src={`/images/black.png`}/>
+                </div>
             </div>
         </div>
     );

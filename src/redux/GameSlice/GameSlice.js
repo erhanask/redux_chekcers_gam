@@ -14,7 +14,43 @@ export const GameSlice = createSlice({
             [{cords:[6,0],status:'empty'},{cords:[6,1],status:'empty'},{cords:[6,2],status:'empty'},{cords:[6,3],status:'empty'},{cords:[6,4],status:'empty'},{cords:[6,5],status:'empty'},{cords:[6,6],status:'empty'},{cords:[6,7],status:'empty'}],
             [{cords:[7,0],status:'empty'},{cords:[7,1],status:'empty'},{cords:[7,2],status:'empty'},{cords:[7,3],status:'empty'},{cords:[7,4],status:'empty'},{cords:[7,5],status:'empty'},{cords:[7,6],status:'empty'},{cords:[7,7],status:'empty'}]
         ],
-
+        pieces: {
+            white: [
+                {id:1,patternCords: [1,0],super: false},
+                {id:2,patternCords: [1,1],super: false},
+                {id:3,patternCords: [1,2],super: false},
+                {id:4,patternCords: [1,3],super: false},
+                {id:5,patternCords: [1,4],super: false},
+                {id:6,patternCords: [1,5],super: false},
+                {id:7,patternCords: [1,6],super: false},
+                {id:8,patternCords: [1,7],super: false},
+                {id:9,patternCords: [2,0],super: false},
+                {id:10,patternCords: [2,1],super: false},
+                {id:11,patternCords: [2,2],super: false},
+                {id:12,patternCords: [2,3],super: false},
+                {id:13,patternCords: [2,4],super: false},
+                {id:14,patternCords: [2,5],super: false},
+                {id:15,patternCords: [2,6],super: false},
+                {id:16,patternCords: [2,7],super: false}],
+            black: [
+                {id:1,patternCords: [5,0],super: false},
+                {id:2,patternCords: [5,1],super: false},
+                {id:3,patternCords: [5,2],super: false},
+                {id:4,patternCords: [5,3],super: false},
+                {id:5,patternCords: [5,4],super: false},
+                {id:6,patternCords: [5,5],super: false},
+                {id:7,patternCords: [5,6],super: false},
+                {id:8,patternCords: [5,7],super: false},
+                {id:9,patternCords: [6,0],super: false},
+                {id:10,patternCords: [6,1],super: false},
+                {id:11,patternCords: [6,2],super: false},
+                {id:12,patternCords: [6,3],super: false},
+                {id:13,patternCords: [6,4],super: false},
+                {id:14,patternCords: [6,5],super: false},
+                {id:15,patternCords: [6,6],super: false},
+                {id:16,patternCords: [6,7],super: false}
+            ],
+        }
     },
     reducers: {},
 })
