@@ -6,4 +6,7 @@
 .boardWrapper{
   border: 10px solid #bababa;
 }
+.boardRow{
+  height: calc(300px/8);
+}
 /*todo: square width will be static*/

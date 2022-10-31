@@ -19,12 +19,12 @@ export const GameTable = () => {
                                 keyIndex++
                                 return (
                                     <div key={keyIndex}
-                                         className={`boardSquare col  ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`}`}>
+                                         className={`boardSquare col d-flex h-100 ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`}`}>
                                         {
                                             pieces.white.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords))
-                                                ? <img className={`w-100`} alt={`white`} src={`/images/white.png`}/>
+                                                ? <img className={`w-50 m-auto`} alt={`white`} src={`/images/white.png`}/>
                                                 : pieces.black.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords))
-                                                    ? <img className={`w-100`} alt={`black`} src={`/images/black.png`}/>
+                                                    ? <img className={`w-50 m-auto`} alt={`black`} src={`/images/black.png`}/>
                                                     : '\u00A0'
                                         }
                                     </div>
