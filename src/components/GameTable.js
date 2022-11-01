@@ -4,9 +4,12 @@ import {useSelector} from "react-redux";
 export const GameTable = () => {
     const pattern = useSelector(state => state.game.pattern);
     const pieces = useSelector(state => state.game.pieces);
-    console.log(pattern);
+
     let keyIndex = 0;
 
+    const handleClick = (color) => {
+        console.log(color);
+    }
 
     return (
         <div className={`gameTable container d-flex pt-4`}>
@@ -22,9 +25,16 @@ export const GameTable = () => {
                                          className={`boardSquare col d-flex h-100 ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`}`}>
                                         {
                                             pieces.white.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords))
-                                                ? <img className={`w-50 m-auto`} alt={`white`} src={`/images/white.png`}/>
+                                                ? <img className={`w-75 m-auto`} alt={`white`} src={`/images/white.png`}
+                                                       onClick={(e) => {
+                                                           handleClick('white');
+                                                       }}/>
                                                 : pieces.black.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords))
-                                                    ? <img className={`w-50 m-auto`} alt={`black`} src={`/images/black.png`}/>
+                                                    ?
+                                                    <img className={`w-75 m-auto`} alt={`black`} src={`/images/black.png`}
+                                                         onClick={(e) => {
+                                                             handleClick('black');
+                                                         }}/>
                                                     : '\u00A0'
                                         }
                                     </div>
