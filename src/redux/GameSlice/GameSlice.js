@@ -50,10 +50,17 @@ export const GameSlice = createSlice({
                 {id:15,patternCords: [6,6],super: false},
                 {id:16,patternCords: [6,7],super: false}
             ],
+        },
+        clickedPiece: {}
+    },
+    reducers: {
+        setClickedPiece: (state,action) => {
+            state.clickedPiece = action.payload;
+            console.log(state.clickedPiece);
         }
     },
-    reducers: {},
 })
 
 
+export const {setClickedPiece} = GameSlice.actions;
 export default GameSlice.reducer;

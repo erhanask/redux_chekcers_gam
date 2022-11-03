@@ -8,6 +8,15 @@ body {
 .boardRow{
   height: calc(350px/8);
 }
+.selectedPiece{
+  background-color: #45d4cd !important;
+}
+
+
+
+
+
+
 @media screen and (max-width: 768px) {
   .boardRow{
     height: calc(300px/8);
