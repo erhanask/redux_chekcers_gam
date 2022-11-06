@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setClickedPiece} from "../redux/GameSlice/GameSlice";
+import {setClickedPiece, setPlayableSquares} from "../redux/GameSlice/GameSlice";
 
 
 export const GameTable = () => {
@@ -12,7 +12,8 @@ export const GameTable = () => {
 
     const handleClick = (color, sqCoords) => {
         let clickedPiece = findPieceByCoords(sqCoords);
-        dispatch(setClickedPiece(clickedPiece))
+        dispatch(setClickedPiece(clickedPiece));
+        dispatch(setPlayableSquares(clickedPiece));
     }
 
     const findPieceByCoords = (coords) => {

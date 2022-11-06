@@ -51,16 +51,26 @@ export const GameSlice = createSlice({
                 {id:16,patternCords: [6,7],super: false}
             ],
         },
-        clickedPiece: {}
+        clickedPiece: {},
+        playableSquares: {}
     },
     reducers: {
         setClickedPiece: (state,action) => {
             state.clickedPiece = action.payload;
+            console.log('clicked function.');
             console.log(state.clickedPiece);
+        },setPlayableSquares: (state,action) => {
+            //We will set patterns playable in here.
+            state.playableSquares = action.payload;
+
+            console.log('playable function.');
+            console.log(state.playableSquares);
+        },updateSquareStatus: (state, action) => {
+
         }
     },
 })
 
 
-export const {setClickedPiece} = GameSlice.actions;
+export const {setClickedPiece,setPlayableSquares} = GameSlice.actions;
 export default GameSlice.reducer;
