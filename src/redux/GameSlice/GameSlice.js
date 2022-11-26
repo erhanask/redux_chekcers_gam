@@ -11,15 +11,13 @@ const checkSpaces = (currentCords, pattern) => {
     // TODO: Updated pattern but i will make code simpler.
     for (let i = 0;i < gamePattern.length; i++) {
         if (!cordXb){
-            //one square back control (x - 1 check)
+            // one square back control (x - 1 check)
             cordXb = gamePattern[i].find((square) => {
-                square.status = 'white_playable';
                 return square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]
             })
             gamePattern[i].forEach((square, index) => {
                 if(square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]) {
-                    cordXb = square?.status === 'empty';
-                    square.status = 'white_playable';
+                    square.status = square.status === 'empty' ? 'playable':'';
                 }
             });
 
@@ -29,6 +27,11 @@ const checkSpaces = (currentCords, pattern) => {
             cordXf = gamePattern[i].find((square) => {
                 return square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]
             })
+            gamePattern[i].forEach((square, index) => {
+                if(square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]) {
+                    square.status = square.status === 'empty' ? 'playable':'';
+                }
+            });
         }
         if (!cordYr){
             //one square right control (y + 1 check)
@@ -45,10 +48,10 @@ const checkSpaces = (currentCords, pattern) => {
     }
 
     perimeterCoords = {
-        cordXb: !!(cordXb?.status === 'empty'),
-        cordXf: !!(cordXf?.status === 'empty'),
-        cordYr: !!(cordYr?.status === 'empty'),
-        cordYl: !!(cordYl?.status === 'empty'),
+        cordXb: cordXb?.status === 'empty',
+        cordXf: cordXf?.status === 'empty',
+        cordYr: cordYr?.status === 'empty',
+        cordYl: cordYl?.status === 'empty',
         pattern: gamePattern,
     }
     return perimeterCoords;
