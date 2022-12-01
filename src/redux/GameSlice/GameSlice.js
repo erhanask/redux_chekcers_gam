@@ -1,60 +1,33 @@
 import {createSlice, current} from "@reduxjs/toolkit";
 
-const checkSpaces = (currentCords, pattern) => {
+const playableControl = (currentCords, pattern) => {
 
     var gamePattern = pattern;
-    var perimeterCoords;
-    var cordXb;
-    var cordXf;
-    var cordYr;
-    var cordYl;
-    // TODO: Updated pattern but i will make code simpler.
+
     for (let i = 0;i < gamePattern.length; i++) {
-        if (!cordXb){
+        gamePattern[i].forEach((square, index) => {
             // one square back control (x - 1 check)
-            cordXb = gamePattern[i].find((square) => {
-                return square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]
-            })
-            gamePattern[i].forEach((square, index) => {
-                if(square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]) {
-                    square.status = square.status === 'empty' ? 'playable':'';
-                }
-            });
+            if(square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]) {
+                square.status = square.status === 'empty' ? 'playable':'';
+            }
 
-        }
-        if (!cordXf){
             //one square forward control (x + 1 check)
-            cordXf = gamePattern[i].find((square) => {
-                return square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]
-            })
-            gamePattern[i].forEach((square, index) => {
-                if(square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]) {
-                    square.status = square.status === 'empty' ? 'playable':'';
-                }
-            });
-        }
-        if (!cordYr){
+            if(square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]) {
+                square.status = square.status === 'empty' ? 'playable':'';
+            }
             //one square right control (y + 1 check)
-            cordYr = gamePattern[i].find((square) => {
-                return square.cords[1] === (currentCords[1] - 1)  && square.cords[0] === currentCords[0]
-            })
-        }
-        if (!cordYl){
+            if(square.cords[1] === (currentCords[1] - 1)  && square.cords[0] === currentCords[0]) {
+                square.status = square.status === 'empty' ? 'playable':'';
+            }
             //one square left control (y - 1 check)
-            cordYl = gamePattern[i].find((square) => {
-                return square.cords[1] === (currentCords[1] + 1)  && square.cords[0] === currentCords[0]
-            })
-        }
+            if(square.cords[1] === (currentCords[1] + 1)  && square.cords[0] === currentCords[0]) {
+                square.status = square.status === 'empty' ? 'playable':'';
+            }
+        });
     }
 
-    perimeterCoords = {
-        cordXb: cordXb?.status === 'empty',
-        cordXf: cordXf?.status === 'empty',
-        cordYr: cordYr?.status === 'empty',
-        cordYl: cordYl?.status === 'empty',
-        pattern: gamePattern,
-    }
-    return perimeterCoords;
+
+    return gamePattern;
 }
 
 export const GameSlice = createSlice({
@@ -122,8 +95,8 @@ export const GameSlice = createSlice({
             var currentSquareCord = action.payload.patternCords;
             // Checking for spaces around piece.
             // Setting patterns square playable.
-            var playableCords = checkSpaces(currentSquareCord, state.pattern)
-            state.pattern = playableCords.pattern
+            var playableCords = playableControl(currentSquareCord, state.pattern)
+            state.pattern = playableCords
 
             console.log('playableCords');
             console.log(playableCords);
