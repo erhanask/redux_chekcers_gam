@@ -1,19 +1,22 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setClickedPiece, setPlayableSquares} from "../redux/GameSlice/GameSlice";
+import {setClickedPiece, setPlayableSquares, movePiece} from "../redux/GameSlice/GameSlice";
 
 
 export const GameTable = () => {
     const pattern = useSelector(state => state.game.pattern);
     const pieces = useSelector(state => state.game.pieces);
+    const playerStatus = useSelector(state => state.game.playerStatus);
     const currentClickedPiece = useSelector(state => state.game.clickedPiece);
     const moveableColor = useSelector(state => state.game.moveableColor);
     const dispatch = useDispatch();
 
     let keyIndex = 0;
 
-    const handleClick = (color, sqCoords) => {
+    const handleClick = (e, color, sqCoords) => {
         let clickedPiece = findPieceByCoords(sqCoords);
         dispatch(setClickedPiece(clickedPiece));
+        document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
+        e.currentTarget.classList.toggle('selectedPiece');
         dispatch(setPlayableSquares(clickedPiece));
     }
 
@@ -36,18 +39,14 @@ export const GameTable = () => {
                                      src={`/images/white.png`}
                                      onClick={(e) => {
                                          if (moveableColor === 'white') {
-                                             document.querySelector('.selectedPiece')?.classList.remove('selectedPiece')
-                                             e.currentTarget.classList.toggle('selectedPiece');
-                                             handleClick('white', JSON.stringify(square.cords));
+                                             handleClick(e,'white', JSON.stringify(square.cords));
                                          }
                                      }}/> : pieces.black.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords)) ?
                                     <img className={`piece w-75 m-auto`} alt={`black`}
                                          src={`/images/black.png`}
                                          onClick={(e) => {
                                              if (moveableColor === 'black') {
-                                                 document.querySelector('.selectedPiece')?.classList.remove('selectedPiece')
-                                                 e.currentTarget.classList.toggle('selectedPiece');
-                                                 handleClick('black', JSON.stringify(square.cords));
+                                                 handleClick(e,'black', JSON.stringify(square.cords));
                                              }
                                          }}/> : '\u00A0'}
                         </div>)

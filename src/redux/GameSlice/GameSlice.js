@@ -1,27 +1,28 @@
 import {createSlice, current} from "@reduxjs/toolkit";
+import {cleanPlayables} from "./helpers";
 
 const playableControl = (currentCords, pattern) => {
 
-    var gamePattern = pattern;
+    var gamePattern = cleanPlayables(pattern);
 
     for (let i = 0;i < gamePattern.length; i++) {
         gamePattern[i].forEach((square, index) => {
             // one square back control (x - 1 check)
             if(square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]) {
-                square.status = square.status === 'empty' ? 'playable':'';
+                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
             }
 
             //one square forward control (x + 1 check)
             if(square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]) {
-                square.status = square.status === 'empty' ? 'playable':'';
+                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
             }
             //one square right control (y + 1 check)
             if(square.cords[1] === (currentCords[1] - 1)  && square.cords[0] === currentCords[0]) {
-                square.status = square.status === 'empty' ? 'playable':'';
+                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
             }
             //one square left control (y - 1 check)
             if(square.cords[1] === (currentCords[1] + 1)  && square.cords[0] === currentCords[0]) {
-                square.status = square.status === 'empty' ? 'playable':'';
+                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
             }
         });
     }
@@ -81,8 +82,8 @@ export const GameSlice = createSlice({
             ],
         },
         clickedPiece: {},
-        playableSquares: {},
         moveableColor: 'white',
+        playerStatus: 'selecting',
     },
     reducers: {
         setClickedPiece: (state,action) => {
@@ -90,24 +91,23 @@ export const GameSlice = createSlice({
             console.log('clicked function.');
             console.log(state.clickedPiece);
         },setPlayableSquares: (state,action) => {
-            state.playableSquares = action.payload;
             // Setting current coordinates of piece.
             var currentSquareCord = action.payload.patternCords;
-            // Checking for spaces around piece.
+
             // Setting patterns square playable.
             var playableCords = playableControl(currentSquareCord, state.pattern)
             state.pattern = playableCords
-
-            console.log('playableCords');
-            console.log(playableCords);
+            state.playerStatus = 'playing'
+            console.log('status');
+            console.log(state.playerStatus);
             console.log('pattern');
             console.log(current(state.pattern));
-        },updatePattern: (state, action) => {
-
+        },movePiece: (state, action) => {
+            console.log('burada şimdi');
         }
     },
 })
 
 
-export const {setClickedPiece,setPlayableSquares} = GameSlice.actions;
+export const {setClickedPiece,setPlayableSquares, movePiece} = GameSlice.actions;
 export default GameSlice.reducer;
