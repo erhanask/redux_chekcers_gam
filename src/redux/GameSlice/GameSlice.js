@@ -1,5 +1,5 @@
 import {createSlice, current} from "@reduxjs/toolkit";
-import {cleanPlayables} from "./helpers";
+import {cleanPlayables, updatePatternViaMove} from "./helpers";
 
 const playableControl = (currentCords, pattern) => {
 
@@ -46,39 +46,39 @@ export const GameSlice = createSlice({
         ],
         pieces: {
             white: [
-                {id:1,patternCords: [1,0], super: false, status: 'playable'},
-                {id:2,patternCords: [1,1], super: false, status: 'playable'},
-                {id:3,patternCords: [1,2], super: false, status: 'playable'},
-                {id:4,patternCords: [1,3], super: false, status: 'playable'},
-                {id:5,patternCords: [1,4], super: false, status: 'playable'},
-                {id:6,patternCords: [1,5], super: false, status: 'playable'},
-                {id:7,patternCords: [1,6], super: false, status: 'playable'},
-                {id:8,patternCords: [1,7], super: false, status: 'playable'},
-                {id:9,patternCords: [2,0], super: false, status: 'playable'},
-                {id:10,patternCords: [2,1], super: false, status: 'playable'},
-                {id:11,patternCords: [2,2], super: false, status: 'playable'},
-                {id:12,patternCords: [2,3], super: false, status: 'playable'},
-                {id:13,patternCords: [2,4], super: false, status: 'playable'},
-                {id:14,patternCords: [2,5], super: false, status: 'playable'},
-                {id:15,patternCords: [2,6], super: false, status: 'playable'},
-                {id:16,patternCords: [2,7], super: false, status: 'playable'}],
+                {id:1,patternCords: [1,0], super: false, status: 'playable', color: 'white'},
+                {id:2,patternCords: [1,1], super: false, status: 'playable', color: 'white'},
+                {id:3,patternCords: [1,2], super: false, status: 'playable', color: 'white'},
+                {id:4,patternCords: [1,3], super: false, status: 'playable', color: 'white'},
+                {id:5,patternCords: [1,4], super: false, status: 'playable', color: 'white'},
+                {id:6,patternCords: [1,5], super: false, status: 'playable', color: 'white'},
+                {id:7,patternCords: [1,6], super: false, status: 'playable', color: 'white'},
+                {id:8,patternCords: [1,7], super: false, status: 'playable', color: 'white'},
+                {id:9,patternCords: [2,0], super: false, status: 'playable', color: 'white'},
+                {id:10,patternCords: [2,1], super: false, status: 'playable', color: 'white'},
+                {id:11,patternCords: [2,2], super: false, status: 'playable', color: 'white'},
+                {id:12,patternCords: [2,3], super: false, status: 'playable', color: 'white'},
+                {id:13,patternCords: [2,4], super: false, status: 'playable', color: 'white'},
+                {id:14,patternCords: [2,5], super: false, status: 'playable', color: 'white'},
+                {id:15,patternCords: [2,6], super: false, status: 'playable', color: 'white'},
+                {id:16,patternCords: [2,7], super: false, status: 'playable', color: 'white'}],
             black: [
-                {id:1,patternCords: [5,0], super: false, status: 'playable'},
-                {id:2,patternCords: [5,1], super: false, status: 'playable'},
-                {id:3,patternCords: [5,2], super: false, status: 'playable'},
-                {id:4,patternCords: [5,3], super: false, status: 'playable'},
-                {id:5,patternCords: [5,4], super: false, status: 'playable'},
-                {id:6,patternCords: [5,5], super: false, status: 'playable'},
-                {id:7,patternCords: [5,6], super: false, status: 'playable'},
-                {id:8,patternCords: [5,7], super: false, status: 'playable'},
-                {id:9,patternCords: [6,0], super: false, status: 'playable'},
-                {id:10,patternCords: [6,1], super: false, status: 'playable'},
-                {id:11,patternCords: [6,2], super: false, status: 'playable'},
-                {id:12,patternCords: [6,3], super: false, status: 'playable'},
-                {id:13,patternCords: [6,4], super: false, status: 'playable'},
-                {id:14,patternCords: [6,5], super: false, status: 'playable'},
-                {id:15,patternCords: [6,6], super: false, status: 'playable'},
-                {id:16,patternCords: [6,7], super: false, status: 'playable'}
+                {id:1,patternCords: [5,0], super: false, status: 'playable', color: 'black'},
+                {id:2,patternCords: [5,1], super: false, status: 'playable', color: 'black'},
+                {id:3,patternCords: [5,2], super: false, status: 'playable', color: 'black'},
+                {id:4,patternCords: [5,3], super: false, status: 'playable', color: 'black'},
+                {id:5,patternCords: [5,4], super: false, status: 'playable', color: 'black'},
+                {id:6,patternCords: [5,5], super: false, status: 'playable', color: 'black'},
+                {id:7,patternCords: [5,6], super: false, status: 'playable', color: 'black'},
+                {id:8,patternCords: [5,7], super: false, status: 'playable', color: 'black'},
+                {id:9,patternCords: [6,0], super: false, status: 'playable', color: 'black'},
+                {id:10,patternCords: [6,1], super: false, status: 'playable', color: 'black'},
+                {id:11,patternCords: [6,2], super: false, status: 'playable', color: 'black'},
+                {id:12,patternCords: [6,3], super: false, status: 'playable', color: 'black'},
+                {id:13,patternCords: [6,4], super: false, status: 'playable', color: 'black'},
+                {id:14,patternCords: [6,5], super: false, status: 'playable', color: 'black'},
+                {id:15,patternCords: [6,6], super: false, status: 'playable', color: 'black'},
+                {id:16,patternCords: [6,7], super: false, status: 'playable', color: 'black'}
             ],
         },
         clickedPiece: {},
@@ -98,12 +98,11 @@ export const GameSlice = createSlice({
             var playableCords = playableControl(currentSquareCord, state.pattern)
             state.pattern = playableCords
             state.playerStatus = 'playing'
-            console.log('status');
-            console.log(state.playerStatus);
-            console.log('pattern');
-            console.log(current(state.pattern));
         },movePiece: (state, action) => {
-            console.log('burada şimdi');
+            var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPiece, action.payload);
+            state.pattern = updatedPattern;
+            console.log(current(state.pattern));
+            // console.log(JSON.stringify(updatedPattern));
         }
     },
 })

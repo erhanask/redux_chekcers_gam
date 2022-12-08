@@ -12,12 +12,19 @@ export const GameTable = () => {
 
     let keyIndex = 0;
 
-    const handleClick = (e, color, sqCoords) => {
+    const handlePieceClick = (e, color, sqCoords) => {
         let clickedPiece = findPieceByCoords(sqCoords);
         dispatch(setClickedPiece(clickedPiece));
         document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
         e.currentTarget.classList.toggle('selectedPiece');
         dispatch(setPlayableSquares(clickedPiece));
+    }
+
+    const handleSquareClick = (e, square) => {
+        if (square.status === 'playable') {
+            dispatch(movePiece(square.cords))
+            console.log(e.currentTarget.classList,square);
+        }
     }
 
     const findPieceByCoords = (coords) => {
@@ -32,21 +39,21 @@ export const GameTable = () => {
                 return (<div key={keyIndex} className={`boardRow row m-0`}>
                     {row.map((square) => {
                         keyIndex++
-                        return (<div key={keyIndex}
-                                     className={`boardSquare col p-0 d-flex h-100 ${square.cords} ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`} ${square.status === `playable` ? `bg-playable` :``}`}>
+                        return (<div key={keyIndex} onClick={(e) => { handleSquareClick(e,square) }}
+                                     className={`boardSquare col p-0 d-flex h-100 ${square.cords} ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`} ${square.status === `playable` ? `bg-playable` : ``}`}>
                             {pieces.white.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords)) ?
                                 <img className={`piece w-75 m-auto`} alt={`white`}
                                      src={`/images/white.png`}
                                      onClick={(e) => {
                                          if (moveableColor === 'white') {
-                                             handleClick(e,'white', JSON.stringify(square.cords));
+                                             handlePieceClick(e, 'white', JSON.stringify(square.cords));
                                          }
                                      }}/> : pieces.black.find(piece => JSON.stringify(piece.patternCords) === JSON.stringify(square.cords)) ?
                                     <img className={`piece w-75 m-auto`} alt={`black`}
                                          src={`/images/black.png`}
                                          onClick={(e) => {
                                              if (moveableColor === 'black') {
-                                                 handleClick(e,'black', JSON.stringify(square.cords));
+                                                 handlePieceClick(e, 'moveableColor', JSON.stringify(square.cords));
                                              }
                                          }}/> : '\u00A0'}
                         </div>)
@@ -65,6 +72,8 @@ export const GameTable = () => {
             </div>
         </div>
     </div>);
+
+    // TODO : Piece aradan kaldırılacak white black tutuyorum zaten onlara göre yazdıracağım ekrana piecelerimi.
 }
 
 
