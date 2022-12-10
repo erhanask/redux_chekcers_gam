@@ -1,35 +1,6 @@
 import {createSlice, current} from "@reduxjs/toolkit";
-import {cleanPlayables, updatePatternViaMove} from "./helpers";
+import {playableControl, updatePatternViaMove} from "./helpers";
 
-const playableControl = (currentCords, pattern) => {
-
-    var gamePattern = cleanPlayables(pattern);
-
-    for (let i = 0;i < gamePattern.length; i++) {
-        gamePattern[i].forEach((square, index) => {
-            // one square back control (x - 1 check)
-            if(square.cords[0] === (currentCords[0] - 1)  && square.cords[1] === currentCords[1]) {
-                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
-            }
-
-            //one square forward control (x + 1 check)
-            if(square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]) {
-                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
-            }
-            //one square right control (y + 1 check)
-            if(square.cords[1] === (currentCords[1] - 1)  && square.cords[0] === currentCords[0]) {
-                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
-            }
-            //one square left control (y - 1 check)
-            if(square.cords[1] === (currentCords[1] + 1)  && square.cords[0] === currentCords[0]) {
-                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
-            }
-        });
-    }
-
-
-    return gamePattern;
-}
 
 export const GameSlice = createSlice({
     name: 'game',
@@ -44,69 +15,32 @@ export const GameSlice = createSlice({
             [{cords:[6,0],status:'black'},{cords:[6,1],status:'black'},{cords:[6,2],status:'black'},{cords:[6,3],status:'black'},{cords:[6,4],status:'black'},{cords:[6,5],status:'black'},{cords:[6,6],status:'black'},{cords:[6,7],status:'black'}],
             [{cords:[7,0],status:'empty'},{cords:[7,1],status:'empty'},{cords:[7,2],status:'empty'},{cords:[7,3],status:'empty'},{cords:[7,4],status:'empty'},{cords:[7,5],status:'empty'},{cords:[7,6],status:'empty'},{cords:[7,7],status:'empty'}]
         ],
-        pieces: {
-            white: [
-                {id:1,patternCords: [1,0], super: false, status: 'playable', color: 'white'},
-                {id:2,patternCords: [1,1], super: false, status: 'playable', color: 'white'},
-                {id:3,patternCords: [1,2], super: false, status: 'playable', color: 'white'},
-                {id:4,patternCords: [1,3], super: false, status: 'playable', color: 'white'},
-                {id:5,patternCords: [1,4], super: false, status: 'playable', color: 'white'},
-                {id:6,patternCords: [1,5], super: false, status: 'playable', color: 'white'},
-                {id:7,patternCords: [1,6], super: false, status: 'playable', color: 'white'},
-                {id:8,patternCords: [1,7], super: false, status: 'playable', color: 'white'},
-                {id:9,patternCords: [2,0], super: false, status: 'playable', color: 'white'},
-                {id:10,patternCords: [2,1], super: false, status: 'playable', color: 'white'},
-                {id:11,patternCords: [2,2], super: false, status: 'playable', color: 'white'},
-                {id:12,patternCords: [2,3], super: false, status: 'playable', color: 'white'},
-                {id:13,patternCords: [2,4], super: false, status: 'playable', color: 'white'},
-                {id:14,patternCords: [2,5], super: false, status: 'playable', color: 'white'},
-                {id:15,patternCords: [2,6], super: false, status: 'playable', color: 'white'},
-                {id:16,patternCords: [2,7], super: false, status: 'playable', color: 'white'}],
-            black: [
-                {id:1,patternCords: [5,0], super: false, status: 'playable', color: 'black'},
-                {id:2,patternCords: [5,1], super: false, status: 'playable', color: 'black'},
-                {id:3,patternCords: [5,2], super: false, status: 'playable', color: 'black'},
-                {id:4,patternCords: [5,3], super: false, status: 'playable', color: 'black'},
-                {id:5,patternCords: [5,4], super: false, status: 'playable', color: 'black'},
-                {id:6,patternCords: [5,5], super: false, status: 'playable', color: 'black'},
-                {id:7,patternCords: [5,6], super: false, status: 'playable', color: 'black'},
-                {id:8,patternCords: [5,7], super: false, status: 'playable', color: 'black'},
-                {id:9,patternCords: [6,0], super: false, status: 'playable', color: 'black'},
-                {id:10,patternCords: [6,1], super: false, status: 'playable', color: 'black'},
-                {id:11,patternCords: [6,2], super: false, status: 'playable', color: 'black'},
-                {id:12,patternCords: [6,3], super: false, status: 'playable', color: 'black'},
-                {id:13,patternCords: [6,4], super: false, status: 'playable', color: 'black'},
-                {id:14,patternCords: [6,5], super: false, status: 'playable', color: 'black'},
-                {id:15,patternCords: [6,6], super: false, status: 'playable', color: 'black'},
-                {id:16,patternCords: [6,7], super: false, status: 'playable', color: 'black'}
-            ],
-        },
-        clickedPiece: {},
-        moveableColor: 'white',
+        clickedPieceCords: [],
+        movableColor: 'white',
         playerStatus: 'selecting',
     },
     reducers: {
-        setClickedPiece: (state,action) => {
-            state.clickedPiece = action.payload;
+        setClickedPieceCords: (state,action) => {
+            state.clickedPieceCords = action.payload;
             console.log('clicked function.');
-            console.log(state.clickedPiece);
+            console.log(state.clickedPieceCords);
         },setPlayableSquares: (state,action) => {
             // Setting current coordinates of piece.
-            var currentSquareCord = action.payload.patternCords;
-
+            var currentSquareCord = action.payload;
             // Setting patterns square playable.
             var playableCords = playableControl(currentSquareCord, state.pattern)
             state.pattern = playableCords
+            console.log(current(state.pattern))
             state.playerStatus = 'playing'
         },movePiece: (state, action) => {
-            var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPiece, action.payload);
+            console.log('movepiece');
+            var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor);
             state.pattern = updatedPattern;
             console.log(current(state.pattern));
-            // console.log(JSON.stringify(updatedPattern));
         }
     },
 })
 
 
-export const {setClickedPiece,setPlayableSquares, movePiece} = GameSlice.actions;
+export const {setClickedPieceCords,setPlayableSquares, movePiece} = GameSlice.actions;
 export default GameSlice.reducer;
