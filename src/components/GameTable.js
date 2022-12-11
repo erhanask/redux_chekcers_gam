@@ -26,7 +26,7 @@ export const GameTable = () => {
     }
 
     return (<div className={`gameTable container d-flex pt-4`}>
-        <div className={`boardWrapper w-75`}>
+        <div className={`boardWrapper w-100`}>
             {pattern.map((row) => {
                 keyIndex++;
                 return (<div key={keyIndex} className={`boardRow row m-0`}>

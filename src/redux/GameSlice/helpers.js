@@ -1,9 +1,9 @@
 import {current} from "@reduxjs/toolkit";
 
-export const playableControl = (currentCords, pattern) => {
+export const playableControl = (currentCords, pattern, movableColor) => {
 
     var gamePattern = cleanPlayables(pattern);
-
+    var oppositeColor = movableColor === 'white' ? 'black' : 'white';
     for (let i = 0;i < gamePattern.length; i++) {
         gamePattern[i].forEach((square, index) => {
             // one square back control (x - 1 check)
@@ -13,7 +13,15 @@ export const playableControl = (currentCords, pattern) => {
 
             //one square forward control (x + 1 check)
             if(square.cords[0] === (currentCords[0] + 1)  && square.cords[1] === currentCords[1]) {
-                square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
+                // square.status = square.status === 'empty' || square.status === 'playable' ? 'playable':square.status;
+
+                if (square.status === 'empty' || square.status === 'playable' ) {
+                    square.status = 'playable'
+                } else if (square.status === oppositeColor) {
+                    console.log('opponent color is here.')
+                }
+
+
             }
             //one square right control (y + 1 check)
             if(square.cords[1] === (currentCords[1] - 1)  && square.cords[0] === currentCords[0]) {

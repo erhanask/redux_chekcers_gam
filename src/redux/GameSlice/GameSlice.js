@@ -21,22 +21,27 @@ export const GameSlice = createSlice({
     },
     reducers: {
         setClickedPieceCords: (state,action) => {
+
             state.clickedPieceCords = action.payload;
             console.log('clicked function.');
             console.log(state.clickedPieceCords);
+
         },setPlayableSquares: (state,action) => {
+
             // Setting current coordinates of piece.
             var currentSquareCord = action.payload;
+
             // Setting patterns square playable.
-            var playableCords = playableControl(currentSquareCord, state.pattern)
+            var playableCords = playableControl(currentSquareCord, state.pattern, state.movableColor);
+
             state.pattern = playableCords
-            console.log(current(state.pattern))
             state.playerStatus = 'playing'
+            console.log(current(state.pattern))
+
         },movePiece: (state, action) => {
-            console.log('movepiece');
             var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor);
             state.pattern = updatedPattern;
-            console.log(current(state.pattern));
+            state.movableColor = state.movableColor === 'white' ? 'black' : 'white';
         }
     },
 })

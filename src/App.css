@@ -10,7 +10,7 @@ body {
   border: 10px solid #bababa;
 }
 .boardRow{
-  height: calc(350px/8);
+  height: calc(576px/8);
 }
 .selectedPiece{
   background-color: #45d4cd !important;
