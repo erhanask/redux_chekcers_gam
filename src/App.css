@@ -19,17 +19,17 @@ body {
   background-color: #45d4cd !important;
   animation: change 5s infinite;
 }
-
-
-
-
-
-
+.piece {
+ width: 55%;
+}
 @media screen and (max-width: 768px) {
   .boardRow{
     height: calc(300px/8);
   }
   .boardSqare img{
     width: 100% !important;
+  }
+  .piece {
+    width: 75% !important
   }
 }

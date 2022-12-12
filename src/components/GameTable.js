@@ -40,7 +40,7 @@ export const GameTable = () => {
                                  className={`boardSquare col p-0 d-flex h-100 ${square.cords} ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`} ${square.status === `playable` ? `bg-playable` : ``}`}>
                                 {
                                     square.status !== 'empty' && square.status !== 'playable' ?
-                                        <img className={`piece w-75 m-auto`} alt={square.status}
+                                        <img className={`piece m-auto`} alt={square.status}
                                              src={`/images/${square.status}.png`}
                                              onClick={(e) => {
                                                  if (movableColor === square.status) {
