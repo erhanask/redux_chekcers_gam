@@ -18,6 +18,7 @@ export const GameSlice = createSlice({
         clickedPieceCords: [],
         movableColor: 'white',
         playerStatus: 'selecting',
+        beatablePieces: []
     },
     reducers: {
         setClickedPieceCords: (state,action) => {
@@ -32,14 +33,13 @@ export const GameSlice = createSlice({
             var currentSquareCord = action.payload;
 
             // Setting patterns square playable.
-            var playableCords = playableControl(currentSquareCord, state.pattern, state.movableColor);
+            var control = playableControl(currentSquareCord, state.pattern, state.movableColor);
 
-            state.pattern = playableCords
+            state.pattern = control.gamePattern
+            state.beatablePieces = control.beatablePieces
             state.playerStatus = 'playing'
-            console.log(current(state.pattern))
-
         },movePiece: (state, action) => {
-            var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor);
+            var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor,state.beatablePieces);
             state.pattern = updatedPattern;
             state.movableColor = state.movableColor === 'white' ? 'black' : 'white';
         }

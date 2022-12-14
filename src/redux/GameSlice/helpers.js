@@ -2,6 +2,7 @@ import {current} from "@reduxjs/toolkit";
 
 export const playableControl = (currentCords, pattern, movableColor) => {
 
+    var beatablePieces = [];
     var gamePattern = cleanPlayables(pattern);
     var oppositeColor = movableColor === 'white' ? 'black' : 'white';
     for (let i = 0; i < gamePattern.length; i++) {
@@ -12,6 +13,7 @@ export const playableControl = (currentCords, pattern, movableColor) => {
                 if (square.status === 'empty' || square.status === 'playable') {
                     square.status = 'playable'
                 } else if (square.status === oppositeColor && typeof gamePattern[i - 1] !== 'undefined' && (gamePattern[i - 1][index].status === 'empty' || gamePattern[i - 1][index].status === 'playable')) {
+                    beatablePieces.push(square.cords);
                     gamePattern[i - 1][index].status = 'playable';
                 }
 
@@ -23,6 +25,7 @@ export const playableControl = (currentCords, pattern, movableColor) => {
                 if (square.status === 'empty' || square.status === 'playable') {
                     square.status = 'playable'
                 } else if (square.status === oppositeColor && typeof gamePattern[i + 1] !== 'undefined' && (gamePattern[i + 1][index].status === 'empty' || gamePattern[i + 1][index].status === 'playable')) {
+                    beatablePieces.push(square.cords);
                     gamePattern[i + 1][index].status = 'playable';
                 }
 
@@ -35,6 +38,7 @@ export const playableControl = (currentCords, pattern, movableColor) => {
                 if (square.status === 'empty' || square.status === 'playable') {
                     square.status = 'playable'
                 } else if (square.status === oppositeColor && typeof gamePattern[i][index - 1] !== 'undefined' && (gamePattern[i][index - 1].status === 'empty' || gamePattern[i][index - 1].status === 'playable')) {
+                    beatablePieces.push(square.cords);
                     gamePattern[i][index - 1].status = 'playable';
                 }
 
@@ -46,6 +50,7 @@ export const playableControl = (currentCords, pattern, movableColor) => {
                 if (square.status === 'empty' || square.status === 'playable') {
                     square.status = 'playable'
                 } else if (square.status === oppositeColor && typeof gamePattern[i][index + 1] !== 'undefined' && (gamePattern[i][index + 1].status === 'empty' || gamePattern[i][index + 1].status === 'playable')) {
+                    beatablePieces.push(square.cords);
                     gamePattern[i][index + 1].status = 'playable';
                 }
 
@@ -55,7 +60,7 @@ export const playableControl = (currentCords, pattern, movableColor) => {
     }
 
 
-    return gamePattern;
+    return {'gamePattern': gamePattern,'beatablePieces': beatablePieces};
 }
 
 export const cleanPlayables = (pattern) => {
@@ -69,8 +74,8 @@ export const cleanPlayables = (pattern) => {
     return pattern;
 }
 
-export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color) => {
-    console.log(current(pattern), current(clickedPiece), clickedSquare);
+export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color, beatablePieces) => {
+    console.log(current(pattern), current(clickedPiece), clickedSquare, current(beatablePieces));
 
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {
