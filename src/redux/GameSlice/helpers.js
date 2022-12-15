@@ -75,7 +75,7 @@ export const cleanPlayables = (pattern) => {
 }
 
 export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color, beatablePieces) => {
-    console.log(current(pattern), current(clickedPiece), clickedSquare, current(beatablePieces));
+    console.log(current(pattern), current(clickedPiece), clickedSquare, {'beatables': current(beatablePieces)});
 
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {

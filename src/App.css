@@ -1,35 +1,43 @@
-@keyframes change {
-  from {background-color: rgba(248,249,250,1);}
-  to {background-color: #45d4cd;}
-}
 body {
-  text-align: center;
-  background-color: #d9d9d9;
+    text-align: center;
+    background-color: #d9d9d9;
 }
-.boardWrapper{
-  border: 10px solid #bababa;
+
+.boardWrapper {
+    border: 10px solid #bababa;
 }
-.boardRow{
-  height: calc(576px/8);
+
+.boardRow {
+    height: calc(576px / 8);
 }
-.selectedPiece{
-  background-color: #45d4cd !important;
+
+.bg-secondary {
+    background-color: #bbbbbb !important;
 }
+
+/*.selectedPiece {*/
+/*    background-color: #45d4cd !important;*/
+/*}*/
+
 .bg-playable {
-  background-color: #45d4cd !important;
-  animation: change 5s infinite;
+    background: rgb(0, 0, 0);
+    background: radial-gradient(circle, rgb(0 0 0 / 77%) 0%, rgb(0 0 0 / 0%) 30%, rgb(0 0 0 / 0%) 55%, rgb(209 209 209) 100%);
 }
+
 .piece {
- width: 55%;
+    width: 55%;
 }
+
 @media screen and (max-width: 768px) {
-  .boardRow{
-    height: calc(300px/8);
-  }
-  .boardSqare img{
-    width: 100% !important;
-  }
-  .piece {
-    width: 75% !important
-  }
+    .boardRow {
+        height: calc(300px / 8);
+    }
+
+    .boardSqare img {
+        width: 100% !important;
+    }
+
+    .piece {
+        width: 75% !important
+    }
 }
