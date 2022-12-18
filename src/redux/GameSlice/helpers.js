@@ -1,4 +1,5 @@
 import {current} from "@reduxjs/toolkit";
+import {type} from "@testing-library/user-event/dist/type";
 
 export const playableControl = (currentCords, pattern, movableColor) => {
 
@@ -60,7 +61,7 @@ export const playableControl = (currentCords, pattern, movableColor) => {
     }
 
 
-    return {'gamePattern': gamePattern,'beatablePieces': beatablePieces};
+    return {'gamePattern': gamePattern, 'beatablePieces': beatablePieces};
 }
 
 export const cleanPlayables = (pattern) => {
@@ -76,13 +77,23 @@ export const cleanPlayables = (pattern) => {
 
 export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color, beatablePieces) => {
     console.log(current(pattern), current(clickedPiece), clickedSquare, {'beatables': current(beatablePieces)});
-
+    var clickedSquareXminus = [clickedSquare[0] - 1, clickedSquare[1]];
+    var clickedSquareYminus = [clickedSquare[0], clickedSquare[1] - 1];
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {
 
             //Setting status of clicked square
             if (square.cords[0] === clickedSquare[0] && square.cords[1] === clickedSquare[1]) {
                 square.status = color;
+            }
+
+            //Setting status of beated square
+            for (let j = 0; j < beatablePieces.length; j++) {
+                if (JSON.stringify(beatablePieces[j]) === JSON.stringify(square.cords)
+                    && (JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareXminus)
+                        || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareYminus))) {
+                    square.status = 'empty';
+                }
             }
 
             //Cleaning clicked piece
@@ -93,4 +104,16 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
     }
 
     return cleanPlayables(pattern);
+}
+
+export const filterBeatablesWithClicked = (clickedSquare, beatablePieces) => {
+
+    for (let i = 1; i < beatablePieces.length; i++) {
+
+        if (beatablePieces[i] === clickedSquare[0]) {
+
+        }
+
+    }
+
 }

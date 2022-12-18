@@ -15,10 +15,6 @@ body {
     background-color: #bbbbbb !important;
 }
 
-/*.selectedPiece {*/
-/*    background-color: #45d4cd !important;*/
-/*}*/
-
 .bg-playable {
     background: rgb(0, 0, 0);
     background: radial-gradient(circle, rgb(0 0 0 / 77%) 0%, rgb(0 0 0 / 0%) 30%, rgb(0 0 0 / 0%) 55%, rgb(209 209 209) 100%);
