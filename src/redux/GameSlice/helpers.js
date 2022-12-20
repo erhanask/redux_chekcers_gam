@@ -80,11 +80,17 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
     var clickedSquareYminus = [clickedSquare[0], clickedSquare[1] - 1];
     var clickedSquareXplus = [clickedSquare[0] + 1, clickedSquare[1]];
     var clickedSquareYplus = [clickedSquare[0], clickedSquare[1] + 1];
+
+    // TODO: super_white and super_black images will be added.
+    if ((color === 'black' && clickedSquare[0] === 0) || (color === 'white' && clickedSquare[0] === 7)) {
+        color = 'super_'+color;
+    }
+
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {
 
             //Setting status of clicked square
-            if (square.cords[0] === clickedSquare[0] && square.cords[1] === clickedSquare[1]) {
+            if (JSON.stringify(square.cords) === JSON.stringify(clickedSquare)) {
                 square.status = color;
             }
 
