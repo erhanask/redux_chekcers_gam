@@ -1,5 +1,4 @@
 import {current} from "@reduxjs/toolkit";
-import {type} from "@testing-library/user-event/dist/type";
 
 export const playableControl = (currentCords, pattern, movableColor) => {
 
@@ -79,6 +78,8 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
     console.log(current(pattern), current(clickedPiece), clickedSquare, {'beatables': current(beatablePieces)});
     var clickedSquareXminus = [clickedSquare[0] - 1, clickedSquare[1]];
     var clickedSquareYminus = [clickedSquare[0], clickedSquare[1] - 1];
+    var clickedSquareXplus = [clickedSquare[0] + 1, clickedSquare[1]];
+    var clickedSquareYplus = [clickedSquare[0], clickedSquare[1] + 1];
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {
 
@@ -89,9 +90,13 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
 
             //Setting status of beated square
             for (let j = 0; j < beatablePieces.length; j++) {
+
                 if (JSON.stringify(beatablePieces[j]) === JSON.stringify(square.cords)
-                    && (JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareXminus)
-                        || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareYminus))) {
+                    &&
+                    (JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareXminus)
+                        || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareYminus)
+                        || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareXplus)
+                        || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareYplus))) {
                     square.status = 'empty';
                 }
             }
