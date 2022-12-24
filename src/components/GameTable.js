@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setClickedPieceCords, setPlayableSquares, movePiece} from "../redux/GameSlice/GameSlice";
+import {setClickedPieceCords, setPlayableSquares, movePiece, setPlayablesSuper} from "../redux/GameSlice/GameSlice";
 
 
 export const GameTable = () => {
@@ -17,6 +17,10 @@ export const GameTable = () => {
     }
     const handleSuperClick = (e, color, sqCoords) => {
         console.log(e,color,sqCoords);
+        dispatch(setClickedPieceCords(sqCoords));
+        document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
+        e.currentTarget.classList.toggle('selectedPiece');
+        dispatch(setPlayablesSuper(sqCoords));
     }
 
     const handleSquareClick = (e, square) => {

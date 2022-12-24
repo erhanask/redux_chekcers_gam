@@ -1,4 +1,4 @@
-import {createSlice, current} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {playableControl, updatePatternViaMove} from "./helpers";
 
 
@@ -39,13 +39,23 @@ export const GameSlice = createSlice({
             state.beatablePieces = control.beatablePieces
             state.playerStatus = 'playing'
         },movePiece: (state, action) => {
-            var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor,state.beatablePieces);
-            state.pattern = updatedPattern;
-            state.movableColor = state.movableColor === 'white' ? 'black' : 'white';
+            var move = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor,state.beatablePieces);
+            state.pattern = move.pattern;
+            state.movableColor = move.color;
+        },setPlayablesSuper: (state, action) => {
+            // Setting current coordinates of piece.
+            var currentSquareCord = action.payload;
+
+            // Setting patterns square playable.
+            var control = playableControl(currentSquareCord, state.pattern, state.movableColor);
+
+            state.pattern = control.gamePattern
+            state.beatablePieces = control.beatablePieces
+            state.playerStatus = 'playing'
         }
     },
 })
 
 
-export const {setClickedPieceCords,setPlayableSquares, movePiece} = GameSlice.actions;
+export const {setClickedPieceCords,setPlayableSquares, movePiece, setPlayablesSuper} = GameSlice.actions;
 export default GameSlice.reducer;
