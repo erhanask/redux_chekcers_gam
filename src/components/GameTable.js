@@ -16,7 +16,7 @@ export const GameTable = () => {
         dispatch(setPlayableSquares(sqCoords));
     }
     const handleSuperClick = (e, color, sqCoords) => {
-        console.log(e,color,sqCoords);
+        console.log('aaa');
         dispatch(setClickedPieceCords(sqCoords));
         document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
         e.currentTarget.classList.toggle('selectedPiece');
@@ -48,11 +48,13 @@ export const GameTable = () => {
                                     <img className={`piece m-auto`} alt={square.status}
                                          src={`/images/${square.status}.png`}
                                          onClick={(e) => {
-                                             console.log(square.status.split("_")[1]);
+                                             console.log(square.status,movableColor,movableColor === square.status);
                                              // with example, if square status equals the current users color this conditions makes able to be played.
-                                             if (movableColor === square.status) {
+
+                                             if (movableColor === square.status && !movableColor.includes('super')) {
                                                  handlePieceClick(e, square.status, square.cords);
-                                             } else if (movableColor === square.status.split("_")[1]) {
+                                             } else {
+                                                 console.log(movableColor+'as');
                                                  handleSuperClick(e, square.status, square.cords);
                                              }
                                          }}/> : '\u00A0'}
