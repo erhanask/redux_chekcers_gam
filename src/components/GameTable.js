@@ -25,10 +25,7 @@ export const GameTable = () => {
 
     const handleSquareClick = (e, square) => {
         if (square.status === 'playable') {
-            console.log('square');
-            console.log(square);
             dispatch(movePiece(square.cords))
-            console.log(e.currentTarget.classList, square);
         }
     }
 
@@ -50,10 +47,10 @@ export const GameTable = () => {
                                          onClick={(e) => {
                                              console.log(square.status,movableColor,movableColor === square.status);
                                              // with example, if square status equals the current users color this conditions makes able to be played.
-
+                                             //todo : this conditions will be fixed.
                                              if (movableColor === square.status && !movableColor.includes('super')) {
                                                  handlePieceClick(e, square.status, square.cords);
-                                             } else {
+                                             } else if (movableColor.includes('super') && square.status.includes('super')) {
                                                  console.log(movableColor+'as');
                                                  handleSuperClick(e, square.status, square.cords);
                                              }

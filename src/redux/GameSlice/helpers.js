@@ -125,7 +125,7 @@ export const superPlayableControl = (currentCords, pattern, movableColor) => {
 
     var beatablePieces = [];
     var gamePattern = cleanPlayables(pattern);
-    var oppositeColor = movableColor === 'white' ? 'black' : 'white';
+    var oppositeColor = movableColor === 'super_white' ? ['black','super_black'] : ['white','super_white'];
     for (let i = 0; i < gamePattern.length; i++) {
         gamePattern[i].forEach((square, index) => {
             // one square back control (x - 1 check)
@@ -134,51 +134,59 @@ export const superPlayableControl = (currentCords, pattern, movableColor) => {
                     if (square.status === 'empty' || square.status === 'playable') {
                         square.status = 'playable'
                     } else if (
-                        square.status === oppositeColor &&
+                        oppositeColor.includes(square.status) &&
                         typeof gamePattern[i - 1] !== 'undefined' &&
                         (gamePattern[i - 1][index].status === 'empty' ||  gamePattern[i - 1][index].status === 'playable')) {
                         beatablePieces.push(square.cords);
                         gamePattern[i - 1][index].status = 'playable';
                     }
                 }
+                //one square right control (y + 1 check)
+                if (square.cords[1] === (currentCords[1] - r) && square.cords[0] === currentCords[0]) {
+
+                    if (square.status === 'empty' || square.status === 'playable') {
+                        square.status = 'playable'
+                    } else if (oppositeColor.includes(square.status) &&
+                        typeof gamePattern[i][index - 1] !== 'undefined' &&
+                        (gamePattern[i][index - 1].status === 'empty' || gamePattern[i][index - 1].status === 'playable')) {
+                        beatablePieces.push(square.cords);
+                        gamePattern[i][index - 1].status = 'playable';
+                    }
+
+                }
             }
+            for (let t = 7; t > 0;t--) {
+                //one square forward control (x + 1 check)
+                if (square.cords[0] === (currentCords[0] + t) && square.cords[1] === currentCords[1]) {
 
-            //one square forward control (x + 1 check)
-            if (square.cords[0] === (currentCords[0] + 1) && square.cords[1] === currentCords[1]) {
+                    if (square.status === 'empty' || square.status === 'playable') {
+                        square.status = 'playable'
+                    } else if (
+                        oppositeColor.includes(square.status) &&
+                        typeof gamePattern[i + 1] !== 'undefined' &&
+                        (gamePattern[i + 1][index].status === 'empty' || gamePattern[i + 1][index].status === 'playable')) {
+                        beatablePieces.push(square.cords);
+                        gamePattern[i + 1][index].status = 'playable';
+                    }
 
-                if (square.status === 'empty' || square.status === 'playable') {
-                    square.status = 'playable'
-                } else if (square.status === oppositeColor && typeof gamePattern[i + 1] !== 'undefined' && (gamePattern[i + 1][index].status === 'empty' || gamePattern[i + 1][index].status === 'playable')) {
-                    beatablePieces.push(square.cords);
-                    gamePattern[i + 1][index].status = 'playable';
+                }
+                //one square left control (y - 1 check)
+                if (square.cords[1] === (currentCords[1] + t) && square.cords[0] === currentCords[0]) {
+
+                    if (square.status === 'empty' || square.status === 'playable') {
+                        square.status = 'playable'
+                    } else if (
+                        oppositeColor.includes(square.status) &&
+                        typeof gamePattern[i][index + 1] !== 'undefined' &&
+                        (gamePattern[i][index + 1].status === 'empty' || gamePattern[i][index + 1].status === 'playable')) {
+                        beatablePieces.push(square.cords);
+                        gamePattern[i][index + 1].status = 'playable';
+                    }
+
                 }
 
             }
 
-
-            //one square right control (y + 1 check)
-            if (square.cords[1] === (currentCords[1] - 1) && square.cords[0] === currentCords[0]) {
-
-                if (square.status === 'empty' || square.status === 'playable') {
-                    square.status = 'playable'
-                } else if (square.status === oppositeColor && typeof gamePattern[i][index - 1] !== 'undefined' && (gamePattern[i][index - 1].status === 'empty' || gamePattern[i][index - 1].status === 'playable')) {
-                    beatablePieces.push(square.cords);
-                    gamePattern[i][index - 1].status = 'playable';
-                }
-
-            }
-
-            //one square left control (y - 1 check)
-            if (square.cords[1] === (currentCords[1] + 1) && square.cords[0] === currentCords[0]) {
-
-                if (square.status === 'empty' || square.status === 'playable') {
-                    square.status = 'playable'
-                } else if (square.status === oppositeColor && typeof gamePattern[i][index + 1] !== 'undefined' && (gamePattern[i][index + 1].status === 'empty' || gamePattern[i][index + 1].status === 'playable')) {
-                    beatablePieces.push(square.cords);
-                    gamePattern[i][index + 1].status = 'playable';
-                }
-
-            }
 
         });
     }
