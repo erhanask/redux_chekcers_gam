@@ -13,15 +13,21 @@ export const GameTable = () => {
         dispatch(setClickedPieceCords(sqCoords));
         document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
         e.currentTarget.classList.toggle('selectedPiece');
-        dispatch(setPlayableSquares(sqCoords));
+        if (color.includes('super')) {
+            dispatch(setPlayablesSuper(sqCoords));
+        } else {
+            dispatch(setPlayableSquares(sqCoords));
+        }
+
     }
-    const handleSuperClick = (e, color, sqCoords) => {
-        console.log('aaa');
-        dispatch(setClickedPieceCords(sqCoords));
-        document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
-        e.currentTarget.classList.toggle('selectedPiece');
-        dispatch(setPlayablesSuper(sqCoords));
-    }
+
+    // const handleSuperClick = (e, color, sqCoords) => {
+    //     console.log('aaa');
+    //     dispatch(setClickedPieceCords(sqCoords));
+    //     document.querySelector('.selectedPiece')?.classList.remove('selectedPiece');
+    //     e.currentTarget.classList.toggle('selectedPiece');
+    //     dispatch(setPlayablesSuper(sqCoords));
+    // }
 
     const handleSquareClick = (e, square) => {
         if (square.status === 'playable') {
@@ -48,11 +54,8 @@ export const GameTable = () => {
                                              console.log(square.status,movableColor,movableColor === square.status);
                                              // with example, if square status equals the current users color this conditions makes able to be played.
                                              //todo : this conditions will be fixed.
-                                             if (movableColor === square.status && !movableColor.includes('super')) {
+                                             if (movableColor === square.status || movableColor.slice(6) === square.status) {
                                                  handlePieceClick(e, square.status, square.cords);
-                                             } else if (movableColor.includes('super') && square.status.includes('super')) {
-                                                 console.log(movableColor+'as');
-                                                 handleSuperClick(e, square.status, square.cords);
                                              }
                                          }}/> : '\u00A0'}
                             </div>)
