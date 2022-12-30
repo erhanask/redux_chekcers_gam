@@ -15,9 +15,6 @@ export const GameTable = () => {
         e.currentTarget.classList.toggle('selectedPiece');
         dispatch(setPlayableSquares(sqCoords));
     }
-    const handleSuperClick = (e, color, sqCoords) => {
-        console.log(e,color,sqCoords);
-    }
 
     const handleSquareClick = (e, square) => {
         if (square.status === 'playable') {
@@ -35,24 +32,24 @@ export const GameTable = () => {
                 return (<div key={keyIndex} className={`boardRow row m-0`}>
                     {row.map((square) => {
                         keyIndex++
-                        return (<div key={keyIndex} onClick={(e) => {
+                        return (
+                            <div key={keyIndex} onClick={(e) => {
                                 handleSquareClick(e, square)
                             }}
-                                     data-status={square.status}
-                                     className={`boardSquare col p-0 d-flex h-100 ${square.cords} ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`} ${square.status === `playable` ? `bg-playable` : ``}`}>
-                                {square.status !== 'empty' && square.status !== 'playable' ?
-                                    <img className={`piece m-auto`} alt={square.status}
-                                         src={`/images/${square.status}.png`}
-                                         onClick={(e) => {
-                                             console.log(square.status.split("_")[1]);
-                                             // with example, if square status equals the current users color this conditions makes able to be played.
-                                             if (movableColor === square.status) {
-                                                 handlePieceClick(e, square.status, square.cords);
-                                             } else if (movableColor === square.status.split("_")[1]) {
-                                                 handleSuperClick(e, square.status, square.cords);
-                                             }
-                                         }}/> : '\u00A0'}
-                            </div>)
+                                 data-status={square.status}
+                                 className={`boardSquare col p-0 d-flex h-100 ${square.cords} ${(square.cords[0] + square.cords[1]) % 2 === 0 ? `bg-light` : `bg-secondary`} ${square.status === `playable` ? `bg-playable` : ``}`}>
+                                {
+                                    square.status !== 'empty' && square.status !== 'playable' ?
+                                        <img className={`piece m-auto`} alt={square.status}
+                                             src={`/images/${square.status}.png`}
+                                             onClick={(e) => {
+                                                 if (movableColor === square.status) {
+                                                     handlePieceClick(e, square.status, square.cords);
+                                                 }
+                                             }}/> : '\u00A0'
+                                }
+                            </div>
+                        )
                     })}
                 </div>)
             })}
