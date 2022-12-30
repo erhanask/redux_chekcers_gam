@@ -92,7 +92,7 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
             //Setting status of clicked square
             if (JSON.stringify(square.cords) === JSON.stringify(clickedSquare)) {
                 if (square.status.includes('super'))
-                    square.status = 'super_' + color;
+                    square.status = 'super_'+color;
                 else
                     square.status = color;
             }
@@ -129,18 +129,15 @@ export const superPlayableControl = (currentCords, pattern, movableColor) => {
     for (let i = 0; i < gamePattern.length; i++) {
         gamePattern[i].forEach((square, index) => {
             // one square back control (x - 1 check)
-            for (let r = 1; r < 7;r ++) {
-                if (square.cords[0] === (currentCords[0] - r) && square.cords[1] === currentCords[1]) {
-                    if (square.status === 'empty' || square.status === 'playable') {
-                        square.status = 'playable'
-                    } else if (
-                        square.status === oppositeColor &&
-                        typeof gamePattern[i - 1] !== 'undefined' &&
-                        (gamePattern[i - 1][index].status === 'empty' ||  gamePattern[i - 1][index].status === 'playable')) {
-                        beatablePieces.push(square.cords);
-                        gamePattern[i - 1][index].status = 'playable';
-                    }
+            if (square.cords[0] === (currentCords[0] - 1) && square.cords[1] === currentCords[1]) {
+
+                if (square.status === 'empty' || square.status === 'playable') {
+                    square.status = 'playable'
+                } else if (square.status === oppositeColor && typeof gamePattern[i - 1] !== 'undefined' && (gamePattern[i - 1][index].status === 'empty' || gamePattern[i - 1][index].status === 'playable')) {
+                    beatablePieces.push(square.cords);
+                    gamePattern[i - 1][index].status = 'playable';
                 }
+
             }
 
             //one square forward control (x + 1 check)

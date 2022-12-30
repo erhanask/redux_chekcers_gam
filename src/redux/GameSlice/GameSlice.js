@@ -1,4 +1,4 @@
-import {createSlice, current} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {playableControl, updatePatternViaMove, superPlayableControl} from "./helpers";
 
 
@@ -48,10 +48,10 @@ export const GameSlice = createSlice({
 
             // Setting patterns square playable.
             var control = superPlayableControl(currentSquareCord, state.pattern, state.movableColor);
+
             state.pattern = control.gamePattern
             state.beatablePieces = control.beatablePieces
             state.playerStatus = 'playing'
-            console.log(current(state.pattern));
         }
     },
 })
