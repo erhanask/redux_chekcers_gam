@@ -80,10 +80,10 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
     var clickedSquareYminus = [clickedSquare[0], clickedSquare[1] - 1];
     var clickedSquareXplus = [clickedSquare[0] + 1, clickedSquare[1]];
     var clickedSquareYplus = [clickedSquare[0], clickedSquare[1] + 1];
-    var changeColor = true;
-    //Setting super pre string for last row click.
+
+    // TODO: super_white and super_black images will be added.
     if ((color === 'black' && clickedSquare[0] === 0) || (color === 'white' && clickedSquare[0] === 7)) {
-        color = 'super_' + color;
+        color = 'super_'+color;
     }
 
     for (let i = 0; i < pattern.length; i++) {
@@ -91,10 +91,7 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
 
             //Setting status of clicked square
             if (JSON.stringify(square.cords) === JSON.stringify(clickedSquare)) {
-                if (square.status.includes('super'))
-                    square.status = 'super_'+color;
-                else
-                    square.status = color;
+                square.status = color;
             }
 
             //Setting status of beated square
@@ -107,16 +104,27 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
                         || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareXplus)
                         || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareYplus))) {
                     square.status = 'empty';
-                    changeColor = false
                 }
             }
 
-            //Cleaning clicked pieces first coords
+            //Cleaning clicked piece
             if (square.cords[0] === clickedPiece[0] && square.cords[1] === clickedPiece[1]) {
                 square.status = 'empty'
             }
         });
     }
 
-    return {pattern: cleanPlayables(pattern), color: changeColor ? color === 'white' ? 'black' : 'white' : color};
+    return cleanPlayables(pattern);
+}
+
+export const filterBeatablesWithClicked = (clickedSquare, beatablePieces) => {
+
+    for (let i = 1; i < beatablePieces.length; i++) {
+
+        if (beatablePieces[i] === clickedSquare[0]) {
+
+        }
+
+    }
+
 }
