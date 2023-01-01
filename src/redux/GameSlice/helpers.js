@@ -1,4 +1,15 @@
-import {current} from "@reduxjs/toolkit";
+
+export const checkGameEnd = (pattern) => {
+
+    for (let i = 0; i < pattern.length; i++) {
+        pattern[i].forEach((square, index) => {
+            if (square.status === 'white' || square.status === 'black') {
+                return false;
+            }
+        })
+    }
+    return true;
+}
 
 export const playableControl = (currentCords, pattern, movableColor) => {
 
@@ -75,11 +86,11 @@ export const cleanPlayables = (pattern) => {
 }
 
 export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color, beatablePieces) => {
-    console.log(current(pattern), current(clickedPiece), clickedSquare, {'beatables': current(beatablePieces)});
     var clickedSquareXminus = [clickedSquare[0] - 1, clickedSquare[1]];
     var clickedSquareYminus = [clickedSquare[0], clickedSquare[1] - 1];
     var clickedSquareXplus = [clickedSquare[0] + 1, clickedSquare[1]];
     var clickedSquareYplus = [clickedSquare[0], clickedSquare[1] + 1];
+    var changeColor = true;
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {
 
@@ -98,6 +109,7 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
                         || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareXplus)
                         || JSON.stringify(beatablePieces[j]) === JSON.stringify(clickedSquareYplus))) {
                     square.status = 'empty';
+                    changeColor = false;
                 }
             }
 
@@ -108,17 +120,8 @@ export const updatePatternViaMove = (pattern, clickedPiece, clickedSquare, color
         });
     }
 
-    return cleanPlayables(pattern);
-}
-
-export const filterBeatablesWithClicked = (clickedSquare, beatablePieces) => {
-
-    for (let i = 1; i < beatablePieces.length; i++) {
-
-        if (beatablePieces[i] === clickedSquare[0]) {
-
-        }
-
-    }
-
+    return {
+        pattern : cleanPlayables(pattern),
+        color: changeColor ? color === 'white' ? 'black' : 'white' : color
+    };
 }
