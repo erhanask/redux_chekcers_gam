@@ -7,10 +7,12 @@ const GamePattern = () => {
     let keyIndex = 0;
     const pattern = useSelector(state => state.game.pattern);
     const isGameEnded = useSelector(state => state.game.isGameEnded);
+    const movableColor = useSelector(state => state.game.movableColor);
+    const dispatch = useDispatch();
+
     const handleSquareClick = (e, square) => {
         if (square.status === 'playable') {
             dispatch(movePiece(square.cords))
-            dispatch(setIsGameEnded(checkGameEnd(pattern)));
         }
     }
 
@@ -21,13 +23,10 @@ const GamePattern = () => {
         dispatch(setPlayableSquares(sqCoords));
     }
 
-    const movableColor = useSelector(state => state.game.movableColor);
-    const dispatch = useDispatch();
-
     if (isGameEnded) {
         return (
           <div className={`alert alert-danger m-0`}>
-              <span onClick={window.location.reload}>Game is ended click to play again.</span>
+              <span style={{cursor : 'pointer'}} onClick={() => window.location.reload()}>Game is ended click to play again.</span>
           </div>
         );
     }

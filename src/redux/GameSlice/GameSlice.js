@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {playableControl, updatePatternViaMove} from "./helpers";
+import {checkGameEnd, playableControl, updatePatternViaMove} from "./helpers";
 
 
 export const GameSlice = createSlice({
@@ -41,7 +41,7 @@ export const GameSlice = createSlice({
             var updatedPattern = updatePatternViaMove(state.pattern, state.clickedPieceCords, action.payload,state.movableColor,state.beatablePieces);
             state.pattern = updatedPattern.pattern;
             state.movableColor = updatedPattern.color;
-
+            state.isGameEnded = checkGameEnd(state.pattern, state.movableColor);
         }
     },
 })

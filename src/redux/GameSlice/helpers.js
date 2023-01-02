@@ -1,14 +1,17 @@
 
-export const checkGameEnd = (pattern) => {
+export const checkGameEnd = (pattern, movableColor) => {
+    let result = true;
+    var oppositeColor = movableColor === 'white' ? 'black' : 'white';
 
     for (let i = 0; i < pattern.length; i++) {
         pattern[i].forEach((square, index) => {
-            if (square.status === 'white' || square.status === 'black') {
-                return false;
+            console.log(square.status);
+            if (square.status === oppositeColor) {
+                return result = false;
             }
         })
     }
-    return true;
+    return result;
 }
 
 export const playableControl = (currentCords, pattern, movableColor) => {
