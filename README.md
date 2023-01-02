@@ -1,4 +1,4 @@
-# simple Checkers Game Made With React Redux
+# Simple Checkers Game Made With React Redux
 
 
 Just you can install and see it on your pc with `npm install && npm start`.
